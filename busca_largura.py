@@ -1,3 +1,5 @@
+# Algoritmo implementado pelo prof Andrei Formiga
+
 def acao(destino, custo):
     return { 'destino': destino, 'custo': custo }
 
