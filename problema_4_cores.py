@@ -1,4 +1,5 @@
-# dicionários com os municípios do estado de Roraima e seus municípios fronteiriços
+from copy import deepcopy
+
 Roraima = {
     'Uiramuta': ['Pacaraima', 'Normandia'],
     'Pacaraima': ['Uiramuta', 'Normandia', 'Boa Vista', 'Amajari'],
@@ -25,31 +26,25 @@ class Problema:
         # e seu valor é uma lista de suas regiões fronteiriças
         self.bordas = bordas
 
-        # mapa é um dicionário com todas as regiões e suas cores
-        # começa em branco
-        # representa o estado inicial do sistema
-        self.mapa = {}
-        for regiao in bordas:
-            self.mapa[regiao] = None
-
         # cores é uma lista com as 4 cores a serem usadas na coloração
         self.cores = cores
 
 class No:
     def __init__(self, mapa, regiao, cor):
-        # mapa é uma lista de dicionarios
+        # mapa é um dicionario
         # cada chave é uma região, seu valor é sua cor atual
         # representa diferentes estados do sistema
-        self.mapa = mapa
+        self.mapa = deepcopy(mapa)
 
         # ao criar um novo nó, passando uma região e uma cor,
         # o nó é criado com a coloração atualizada
-        mapa[regiao] = cor
+        self.mapa[regiao] = cor
 
     def __str__(self):
         string = ''
         for regiao in self.mapa:
-            string = string + f'\n{regiao}: {self.mapa[regiao]}'
+            if self.mapa[regiao] != '':
+                string = string + f'{regiao}: {self.mapa[regiao]}\n'
         return string
 
     def __repr__(self):
@@ -57,27 +52,39 @@ class No:
     
     def filhos(self, cores, proxima_regiao):
         filhos = []
-        for c in cores:
-            print(c)
-            filhos.append(No(self.mapa, proxima_regiao, c))
+        for cor in cores:
+            filho = No(self.mapa, proxima_regiao, cor)
+            filhos.append(filho)
         return filhos
-
-'''
-A busca funcionará assim:
-Começando com todas as regiões em branco, uma a uma, na ordem em que elas aparecem na lista,
-será adicionado à fronteira 4 nós, um para cada opção de cores para aquela região.
-Depois, para a próxima região, serão novamente acrescentados 4 nós, e assim por diante.
-Serão podados os nós que tenham regiões vizinhas com a mesma cor.
-
-Dessa forma, o tipo de busca mais interessante é a em profundidade, pois ela colorirá
-todos os nós em menos iterações
-'''
 
 class Coloracao:
     def __init__(self, problema):
         self.problema = problema
         self.fronteira = []
         self.status = 'Coloração iniciando'
+        # status possíveis: 'Coloração iniciando', 'Coloração em andamento', 'Coloração finalizada'
 
-    def passo():
-        pass
+        self.indice = 0
+        # o indice guardará a posição da próxima região a ser colorida na busca
+
+        # mapa é um dicionário com todas as regiões e suas cores
+        # começa em branco
+        # representa o estado inicial do sistema
+        self.mapa = {}
+        for regiao in self.problema.bordas:
+            self.mapa[regiao] = ''
+
+    def passo(self):
+        if self.status == 'Coloração finalizada':
+            print('Coloração finalizada')
+            return
+        
+        try:
+            no = self.fronteira.pop(-1)
+        except IndexError:
+            self.situacao = 'Coloração finalizada'
+            return
+
+        for filho in no.filhos(self.problema.cores, self.problema.bordas[self.problema.mapa]):
+            self.fronteira.append(filho)
+            pass
