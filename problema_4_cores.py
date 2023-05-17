@@ -36,30 +36,31 @@ class Problema:
         self.cores = cores
 
 class No:
-    def __init__(self, mapa_coloracao_atual, regiao, cor):
-        # mapa_coloracao_atual é uma lista de dicionarios
+    def __init__(self, mapa, regiao, cor):
+        # mapa é uma lista de dicionarios
         # cada chave é uma região, seu valor é sua cor atual
         # representa diferentes estados do sistema
-        self.mapa_coloracao_atual = mapa_coloracao_atual
+        self.mapa = mapa
 
         # ao criar um novo nó, passando uma região e uma cor,
         # o nó é criado com a coloração atualizada
-        if cor != None and regiao != None:
-            mapa_coloracao_atual[regiao] = cor
+        mapa[regiao] = cor
 
     def __str__(self):
         string = ''
-        for regiao in self.mapa_coloracao_atual:
-            string = string + f'\n{regiao}: {self.mapa_coloracao_atual[regiao]}'
+        for regiao in self.mapa:
+            string = string + f'\n{regiao}: {self.mapa[regiao]}'
         return string
 
     def __repr__(self):
         return self.__str__()
     
-    def filhos(self, problema, proxima_regiao):
+    def filhos(self, cores, proxima_regiao):
         filhos = []
-        for cor in problema.cores:
-            filhos.append(No(problema.mapa, cor, proxima_regiao))
+        for c in cores:
+            print(c)
+            filhos.append(No(self.mapa, proxima_regiao, c))
+        return filhos
 
 '''
 A busca funcionará assim:
