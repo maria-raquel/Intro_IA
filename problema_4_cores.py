@@ -165,7 +165,7 @@ class Coloracao_Profundidade:
             self.passo()
         return 
         
-    def imprime_mapa_colorido(self):
+    def imprime_dict_mapa(self):
         for regiao in self.mapa:
             print(f'{regiao}: {self.mapa[regiao]}')
         return
@@ -269,7 +269,7 @@ class Coloracao_Largura:
             self.passo()
         return 
         
-    def imprime_mapa_colorido(self):
+    def imprime_dict_mapa(self):
         for regiao in self.mapa:
             print(f'{regiao}: {self.mapa[regiao]}')
         return
