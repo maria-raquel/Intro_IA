@@ -170,7 +170,8 @@ class Coloracao_Profundidade:
             print(f'{regiao}: {self.mapa[regiao]}')
         return
     
-    def gera_mapa(self, geojson_path):
+    # Recebe o caminho para o arquivo geojson e o nome da coluna que contém o nome das regiões
+    def gera_mapa(self, geojson_path, nome_coluna):
         gdf = gpd.read_file(geojson_path)
 
         # gera o mapa
@@ -179,7 +180,7 @@ class Coloracao_Profundidade:
 
         # para cada região, adiciona um patch da cor correspondente
         for regiao in self.mapa:
-            gdf[gdf.name == regiao].plot(edgecolor = 'white', color = self.mapa[regiao], ax=ax)
+            gdf[gdf[nome_coluna] == regiao].plot(edgecolor = 'white', color = self.mapa[regiao], ax=ax)
 
         ax.set_xticks([])
         ax.set_yticks([])
@@ -274,7 +275,8 @@ class Coloracao_Largura:
             print(f'{regiao}: {self.mapa[regiao]}')
         return
     
-    def gera_mapa(self, geojson_path):
+    # Recebe o caminho para o arquivo geojson e o nome da coluna que contém o nome das regiões
+    def gera_mapa(self, geojson_path, nome_coluna):
         gdf = gpd.read_file(geojson_path)
 
         # gera o mapa
@@ -283,7 +285,7 @@ class Coloracao_Largura:
 
         # para cada região, adiciona um patch da cor correspondente
         for regiao in self.mapa:
-            gdf[gdf.name == regiao].plot(edgecolor = 'white', color = self.mapa[regiao], ax=ax)
+            gdf[gdf[nome_coluna] == regiao].plot(edgecolor = 'white', color = self.mapa[regiao], ax=ax)
 
         ax.set_xticks([])
         ax.set_yticks([])
