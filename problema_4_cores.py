@@ -97,6 +97,19 @@ class Coloracao:
         for regiao in self.problema.bordas:
             self.mapa[regiao] = ''
 
+    def __str__(self):
+        if self.status == COLORACAO_INICIANDO:
+            return 'Coloração iniciando'
+        elif self.status == COLORACAO_EM_ANDAMENTO:
+            return 'Coloração em andamento'
+        elif self.status == COLORACAO_SUCESSO:
+            return 'Coloração bem sucedida'
+        elif self.status == COLORACAO_SEM_SUCESSO:
+            return 'Coloração sem sucesso'
+        
+    def __repr__(self):
+        return self.__str__()
+
     def passo(self):
         if self.status == COLORACAO_INICIANDO:
 
@@ -142,16 +155,6 @@ class Coloracao:
         while self.status == COLORACAO_EM_ANDAMENTO or self.status == COLORACAO_INICIANDO:
             self.passo()
         return 
-    
-    def show_status(self):
-        if self.status == COLORACAO_INICIANDO:
-            return 'Coloração iniciando'
-        elif self.status == COLORACAO_EM_ANDAMENTO:
-            return 'Coloração em andamento'
-        elif self.status == COLORACAO_SUCESSO:
-            return 'Coloração bem sucedida'
-        elif self.status == COLORACAO_SEM_SUCESSO:
-            return 'Coloração sem sucesso'
         
     def imprime_mapa_colorido(self):
         for regiao in self.mapa:
