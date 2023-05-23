@@ -79,7 +79,7 @@ class No:
     
     '''
     is_viavel verifica se o nó respeita a restrição do problema: 
-        não ter 4 cores iguais em regiões fronteiriças
+        não ter cores iguais em regiões fronteiriças
         mas não verifica se o mapa está completamente colorido
 
     is_preenchido verifica se o mapa do nó está completamente colorido mas
