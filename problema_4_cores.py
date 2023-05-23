@@ -1,4 +1,6 @@
 from copy import deepcopy
+import geopandas as gpd
+import matplotlib.pyplot as plt
 
 class Problema:
     def __init__(self, bordas, cores):
@@ -23,10 +25,12 @@ class No:
 
     def __str__(self):
         # só imprime as regiões preenchidas, por legibilidade
-        string = ''
+        string = '('
         for regiao in self.mapa:
             if self.mapa[regiao] != '':
                 string = string + f'{regiao}: {self.mapa[regiao]}\n'
+        string = string[:-1]
+        string = string + ')'
         return string
 
     def __repr__(self):
@@ -96,6 +100,8 @@ class Coloracao:
         self.mapa = {}
         for regiao in self.problema.bordas:
             self.mapa[regiao] = ''
+        
+        self.passos_dados = 0
 
     def __str__(self):
         if self.status == COLORACAO_INICIANDO:
@@ -122,6 +128,7 @@ class Coloracao:
                 self.fronteira.append(novo_no)
             
             self.status = COLORACAO_EM_ANDAMENTO
+            self.passos_dados = 1
 
             return
         
@@ -149,6 +156,8 @@ class Coloracao:
                 else: 
                     self.fronteira.append(filho)
         
+        self.passos_dados += 1
+        
         return
     
     def executar(self):
@@ -159,4 +168,21 @@ class Coloracao:
     def imprime_mapa_colorido(self):
         for regiao in self.mapa:
             print(f'{regiao}: {self.mapa[regiao]}')
+        return
+    
+    def gera_mapa(self, geojson_path):
+        gdf = gpd.read_file(geojson_path)
+
+        # gera o mapa
+        fig, ax = plt.subplots(figsize=(10, 10))
+        gdf.plot(ax=ax, linewidth=0.8, edgecolor='white', legend=False)
+
+        # para cada região, adiciona um patch da cor correspondente
+        for regiao in self.mapa:
+            gdf[gdf.name == regiao].plot(edgecolor = 'white', color = self.mapa[regiao], ax=ax)
+
+        ax.set_xticks([])
+        ax.set_yticks([])
+
+        plt.show()
         return
