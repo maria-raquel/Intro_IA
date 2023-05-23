@@ -234,8 +234,10 @@ class Coloracao_Largura:
 
             return
         
+        # a diferença entre essa classe e a coloracao_profundidade é o índice
+        # no qual fazemos o seguinte pop:
         try:
-            proximo_no = self.fronteira.pop(-1)
+            proximo_no = self.fronteira.pop(0) 
         except IndexError:
             self.situacao = COLORACAO_SEM_SUCESSO
             return
