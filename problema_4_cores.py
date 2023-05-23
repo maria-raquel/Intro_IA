@@ -2,6 +2,13 @@ from copy import deepcopy
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
+COLORACAO_INICIANDO = 1
+COLORACAO_EM_ANDAMENTO = 2
+COLORACAO_SUCESSO = 3
+COLORACAO_SEM_SUCESSO = 0
+
+''' ---------------------------------------------------------------------- '''
+
 class Problema:
     def __init__(self, bordas, cores):
         # bordas é um dicionário onde cada chave é uma região
@@ -10,6 +17,8 @@ class Problema:
 
         # cores é uma lista com as 4 cores a serem usadas na coloração
         self.cores = cores
+
+''' ---------------------------------------------------------------------- '''
 
 class No:
     def __init__(self, mapa, regiao, cor):
@@ -80,10 +89,7 @@ class No:
         o estado objetivo
     '''
 
-COLORACAO_INICIANDO = 1
-COLORACAO_EM_ANDAMENTO = 2
-COLORACAO_SUCESSO = 3
-COLORACAO_SEM_SUCESSO = 0
+''' ---------------------------------------------------------------------- '''
 
 # classe para realizar a coloração, com busca em profundidade
 class Coloracao_Profundidade:
@@ -188,6 +194,8 @@ class Coloracao_Profundidade:
         plt.show()
         return
     
+''' ---------------------------------------------------------------------- '''
+
 # classe para realizar a coloração, com busca em largura
 class Coloracao_Largura:
     def __init__(self, problema):
