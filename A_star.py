@@ -3,7 +3,6 @@ import heapq as hp
 def acao(destino, custo):
     return { 'destino': destino, 'custo': custo}
 
-
 # A primeira adaptação será adicionar uma chave nos dicionários 
 # que guarde a distância da cidade a Bucareste em linha reta
 estados_romenia = [
@@ -101,7 +100,7 @@ class No:
         # Adicionamos um campo no nó que guardará seu valor para a função de avaliação
         # A função é a soma da disttância e o custo do nó
         distancia = next(e for e in estados_romenia if e['estado'] == estado)['distancia']
-        self.funcao_avaliacao = self.custo + distancia
+        self.funcao_avaliacao = custo + distancia
 
     def __str__(self):
         return f'({self.estado}, c = {self.custo}, d = {self.funcao_avaliacao})'
