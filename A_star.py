@@ -103,7 +103,7 @@ class No:
         self.funcao_avaliacao = custo + distancia
 
     def __str__(self):
-        return f'({self.estado}, c = {self.custo}, d = {self.funcao_avaliacao})'
+        return f'({self.estado}, c = {self.custo})'
 
     def __repr__(self):
         return self.__str__()
@@ -117,7 +117,7 @@ class No:
 
         resultado = []
         for acao in espaco_acoes['acoes']:
-            filho = No(acao['destino'], self.custo + acao['custo'],
+            filho = No(acao['destino'], acao['custo'],
                        self, acao['destino'])
             resultado.append(filho)
 
@@ -149,7 +149,8 @@ class A_Star:
         self.visitados = [problema.inicial.estado]
 
         # A fronteira passa a ser uma fila com prioridade
-        self.fronteira = [problema.inicial]
+        self.fronteira = []
+        hp.heappush(self.fronteira, problema.inicial)
 
         self.solucao = []
         self.situacao = BUSCA_INICIANDO
