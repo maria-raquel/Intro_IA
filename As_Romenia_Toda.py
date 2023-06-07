@@ -1,7 +1,7 @@
 import heapq as hp
 from geopy.geocoders import Nominatim
 from haversine import haversine
-from busca_largura import estados_romenia
+from A_star import estados_romenia
 
 BUSCA_INICIANDO = 0
 BUSCA_FALHOU = 1
@@ -17,7 +17,7 @@ def coordenadas(cidade):
     else:
         return location.latitude, location.longitude
 
-# Para cada cidade na lista estados_romenia, adicionamos suas coordenadas geográficas
+# Para cada cidade, adicionamos suas coordenadas geográficas
 for estado in estados_romenia:
     estado['coordenadas'] = coordenadas(estado['estado'])
 
@@ -27,12 +27,8 @@ def distancia(estado_atual, estado_objetivo):
     distancia = haversine(estado1['coordenadas'], estado2['coordenadas'])
     return distancia
 
-def acao(destino, custo):
+def acao(destino, custo): 
     return { 'destino': destino, 'custo': custo}
-
-# Para cada cidade, adicionamos suas coordenadas geográficas
-for estado in estados_romenia:
-    estado['coordenadas'] = coordenadas(estado['estado'])
 
 class No:
     # O nó passa a receber o estado objetivo como parâmetro
@@ -69,7 +65,7 @@ class No:
 
         return resultado
 
-    def constroi_solucao(self):
+    def constroi_solucao(self): 
         no_atual = self
         solucao = [no_atual]
         while no_atual.pai != None:
